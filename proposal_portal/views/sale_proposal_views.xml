@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sale_proposal_view_tree" model="ir.ui.view">
+        <field name="name">sale.proposal.view.tree</field>
+        <field name="model">sale.proposal</field>
+        <field name="arch" type="xml">
+            <tree string="Sale Proposal">
+                <field name="name" string="Number" />
+                <field name="state" decoration-success="state == 'sale'" decoration-info="state == 'draft'" decoration-primary="state == 'sent'" widget="badge" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="sale_proposal_view_form" model="ir.ui.view">
+        <field name="name">sale.proposal.view.form</field>
+        <field name="model">sale.proposal</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <button id="send_by_email_primary" position="attributes">
+                <attribute name="name">action_send_email</attribute>
+            </button>
+            <page name="optional_products" position="replace"></page>
+            <xpath expr="//group[@name='sale_info']" position="before">
+                <group name="sales_proposal" string="Sale Proposal Details">
+                    <field name="proposal_status" />
+                    <field name="sale_order" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_proposal_action" model="ir.actions.act_window">
+        <field name="name">Sale Proposal</field>
+        <field name="res_model">sale.proposal</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>
